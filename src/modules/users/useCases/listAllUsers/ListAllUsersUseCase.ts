@@ -5,12 +5,6 @@ interface IRequest {
   user_id: string;
 }
 
-interface IValid {
-  type: number;
-  error?: string;
-  result?: User[];
-}
-
 /**
  * [x] - Verificar se um User é administrador
  * [x] - Se for, retorne todos os Users
@@ -19,19 +13,19 @@ interface IValid {
 class ListAllUsersUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  execute({ user_id }: IRequest): IValid {
+  execute({ user_id }: IRequest): User[] {
     const buscarAdmin = this.usersRepository.findById(user_id);
 
     if (!buscarAdmin) {
-      return { type: 400, error: "User not exists" };
+      throw new Error("User not found");
     }
 
     const { admin } = buscarAdmin;
     if (admin === false) {
-      return { type: 400, error: "User not permissions" };
+      throw new Error("User not permissions");
     }
     const all = this.usersRepository.list();
-    return { type: 201, result: all };
+    return all;
   }
 }
 

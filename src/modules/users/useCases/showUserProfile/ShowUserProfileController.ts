@@ -7,14 +7,13 @@ class ShowUserProfileController {
 
   handle(request: Request, response: Response): Response {
     const { user_id } = request.params;
-    const findById = this.showUserProfileUseCase.execute({ user_id });
-    const { type, error, result } = findById;
 
-    if (error) {
-      return response.status(type).json({ error });
+    try {
+      const findById = this.showUserProfileUseCase.execute({ user_id });
+      return response.status(200).json(findById);
+    } catch (error) {
+      return response.status(404).json({ error: error.message });
     }
-
-    return response.status(type).json(result);
   }
 }
 
