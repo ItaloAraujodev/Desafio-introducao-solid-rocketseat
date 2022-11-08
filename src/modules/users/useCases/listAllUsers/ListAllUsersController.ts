@@ -12,7 +12,13 @@ class ListAllUsersController {
       : headers.user_id;
     const all = this.listAllUsersUseCase.execute({ user_id: id });
 
-    return response.status(200).json(all);
+    const { type, error, result } = all;
+
+    if (error) {
+      return response.status(type).json({ error });
+    }
+
+    return response.status(type).json(result);
   }
 }
 

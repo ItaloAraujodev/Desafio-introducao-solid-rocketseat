@@ -6,17 +6,24 @@ interface IRequest {
   email: string;
 }
 
+interface IValid {
+  type: number;
+  error?: string;
+  result?: User;
+}
+
 class CreateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  execute({ email, name }: IRequest): User {
+  execute({ email, name }: IRequest): IValid {
     const verifEmail = this.usersRepository.findByEmail(email);
+
     if (verifEmail) {
-      throw new Error("Email already exists");
+      return { type: 400, error: "Email already exist" };
     }
 
     const create = this.usersRepository.create({ email, name });
-    return create;
+    return { type: 201, result: create };
   }
 }
 

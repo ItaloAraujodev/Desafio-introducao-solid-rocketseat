@@ -9,7 +9,13 @@ class TurnUserAdminController {
     const { user_id } = request.params;
     const findAll = this.turnUserAdminUseCase.execute({ user_id });
 
-    return response.status(200).json(findAll);
+    const { type, result, error } = findAll;
+
+    if (error) {
+      return response.status(type).json({ error });
+    }
+
+    return response.status(type).json(result);
   }
 }
 
