@@ -1,0 +1,268 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Introduction to SOLID",
+        "description": "This is an API Rent",
+        "version": "1.0.0",
+        "contact": {
+            "email": "italoarauju2019@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "enum": ["Italo Araujo"]
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "enum": ["Italo@italo.com"]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type":"object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "enum": ["Email already exists"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List All Users",
+                "description": "Somente usuário admin pode acessar",
+                "parameters": [{
+                    "type": "string",
+                    "name": "user_id",
+                    "in": "header",
+                    "description": "user_id",
+                    "required": true
+                }],
+                    
+                "responses": {
+                    "200": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string",
+                                                "enum": ["30d77eee-33ef-49d8-a9e0-75b3e918775a"]
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "enum": ["RocketSeat"]
+                                            },
+                                            "admin": {
+                                                "type": "boolean",
+                                                "enum": [
+                                                    false
+                                                ]
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "enum": ["oi@rocketseat.com.br"]
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "enum": ["2022-11-09T23:57:01.023Z"]
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "enum": ["2022-11-09T23:57:01.023Z"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário sem permissão ou Usuário não encontrado"
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retorna um usuário especifico",
+                "description": "ID do usuário",
+                "parameters": [{
+                    "type": "string",
+                    "name": "user_id",
+                    "in": "path",
+                    "description": "ID do usuário",
+                    "required": true
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "enum": ["30d77eee-33ef-49d8-a9e0-75b3e918775a"]
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "enum": ["RocketSeat"]
+                                        },
+                                        "admin": {
+                                            "type": "boolean",
+                                            "enum": [
+                                                false
+                                            ]
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "enum": ["oi@rocketseat.com.br"]
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "enum": ["2022-11-09T23:57:01.023Z"]
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "enum": ["2022-11-09T23:57:01.023Z"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type":"object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "enum": ["User not found"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Torna admin um usuário",
+                "parameters": [{
+                    "type": "string",
+                    "name": "user_id",
+                    "in": "path",
+                    "description": "user_id",
+                    "required": true
+                }],
+
+                "responses": {
+                    "200": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "enum": ["30d77eee-33ef-49d8-a9e0-75b3e918775a"]
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "enum": ["RocketSeat"]
+                                        },
+                                        "admin": {
+                                            "type": "boolean",
+                                            "enum": [
+                                                true
+                                            ]
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "enum": ["oi@rocketseat.com.br"]
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "enum": ["2022-11-09T23:57:01.023Z"]
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "enum": ["2022-11-09T23:57:01.023Z"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type":"object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "enum": ["User not found"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
