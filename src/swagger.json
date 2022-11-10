@@ -38,7 +38,42 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "enum": ["30d77eee-33ef-49d8-a9e0-75b3e918775a"]
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "enum": ["RocketSeat"]
+                                        },
+                                        "admin": {
+                                            "type": "boolean",
+                                            "enum": [
+                                                false
+                                            ]
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "enum": ["oi@rocketseat.com.br"]
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "enum": ["2022-11-09T23:57:01.023Z"]
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "enum": ["2022-11-09T23:57:01.023Z"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "Usuário não encontrado",
